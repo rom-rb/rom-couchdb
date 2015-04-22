@@ -28,6 +28,10 @@ module ROM
         @results.count
       end
 
+      def to_a
+        @results
+      end
+
       def find_by_id(id, params = {})
         document = @connection.get(id, params).to_hash
         self.class.new(@connection, [document])
