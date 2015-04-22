@@ -1,0 +1,6 @@
+AllCops:
+  Exclude:
+    - 'rom-couchdb.gemspec'
+    - 'test/cases/unit/*'
+    - 'test/cases/integration/*'
+    - 'test/support/*'
