@@ -1,0 +1,7 @@
+language: ruby
+rvm:
+  - 2.2.2
+services:
+  - couchdb
+before_script:
+  - curl -X PUT localhost:5984/testdb
