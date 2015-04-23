@@ -1,5 +1,6 @@
 require 'rom'
 
+require 'rom/couchdb/core_ext/hash_refinements'
 require 'rom/couchdb/version'
 require 'rom/couchdb/repository'
 require 'rom/couchdb/dataset'

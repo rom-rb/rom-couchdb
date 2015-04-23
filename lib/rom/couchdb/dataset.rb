@@ -4,6 +4,7 @@ module ROM
   module CouchDB
     # CouchDB Dataset
     class Dataset
+      using HashRefinements
       attr_reader :results
       def initialize(connection, results = [])
         @connection, @results = connection, results
@@ -11,6 +12,7 @@ module ROM
 
       def insert(object)
         @connection.save_doc(object)
+        object.symbolize_keys!
         self
       end
       alias_method :<<, :insert
@@ -34,11 +36,12 @@ module ROM
 
       def find_by_id(id, params = {})
         document = @connection.get(id, params).to_hash
-        self.class.new(@connection, [document])
+        self.class.new(@connection, [document.symbolize_keys!])
       end
 
       def find_by_view(name, params = {})
-        documents = @connection.view(name, params)
+        # rubocop:disable Style/SymbolProc
+        documents = @connection.view(name, params).map { |d| d.symbolize_keys }
         self.class.new(@connection, documents)
       end
     end

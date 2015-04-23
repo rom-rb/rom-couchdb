@@ -23,7 +23,8 @@ class CommandsTest < Minitest::Test
     data = @user_commands.create.call(user_data)
     document = data.first
 
-    assert_in_couch document
+    refute_nil document[:'_id']
+    refute_nil document[:'_rev']
 
     # ensure the data is the same
     assert_equal ['test_user_name', 12], document.values_at(:name, :age)
@@ -43,14 +44,14 @@ class CommandsTest < Minitest::Test
     updated_document = @user_commands.update.call(document).first
 
     #make sure the id is the same but the rev changed
-    assert_equal document['_id'], updated_document['_id']
-    refute_equal document['_rev'], updated_document['_rev']
+    assert_equal document['_id'], updated_document[:'_id']
+    refute_equal document['_rev'], updated_document[:'_rev']
   end
 
   def test_delete_command
     #set up a raw couchdb connection and save a document
     connection = CouchRest.database(@database_name)
-    document = {key: 'value'}
+    document = { key: 'value' }
     connection.save_doc(document)
 
     assert_in_couch document
