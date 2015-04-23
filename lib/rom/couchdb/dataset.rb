@@ -40,8 +40,7 @@ module ROM
       end
 
       def find_by_view(name, params = {})
-        # rubocop:disable Style/SymbolProc
-        documents = @connection.view(name, params).map { |d| d.symbolize_keys }
+        documents = @connection.view(name, params).symbolize_keys
         self.class.new(@connection, documents)
       end
     end

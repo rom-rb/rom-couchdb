@@ -33,12 +33,12 @@ class DatasetTest < Minitest::Test
   end
 
   def test_find_by_view
-    @connection_mock.expect :view, [{ new_key: 'new_value' }], [String, Hash]
+    @connection_mock.expect :view, {total_rows: 1, offset: 0, row: [{ new_key: 'new_value' }]}, [String, Hash]
 
     dataset = @dataset.find_by_view('view_name', {})
 
     @connection_mock.verify
     refute_equal dataset, @dataset
-    assert_equal [{ new_key: 'new_value' }], dataset.results
+    assert_equal ({total_rows: 1, offset: 0, row: [{ new_key: 'new_value' }]}), dataset.results
   end
 end
