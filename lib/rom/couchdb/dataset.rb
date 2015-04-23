@@ -11,7 +11,7 @@ module ROM
       end
 
       def insert(object)
-        @connection.save_doc(object)
+        @connection.save_doc(object.stringify_keys!)
         object.symbolize_keys!
         self
       end
