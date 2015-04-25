@@ -58,6 +58,7 @@ color_relations = rom.relation(:colors)
 
 
 color = color_commands.as(:entity).create.call(name: "Red", code: 8)
+update = color_commands.as(:entity).create.call(name: "Blue", code: 9, _id: color.id, _rev: color.rev)
 
 find = color_relations.as(:entity).find_id(color.id).one
 all_docs = color_relations.find_view('_all_docs', {})
