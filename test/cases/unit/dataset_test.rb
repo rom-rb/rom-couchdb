@@ -39,6 +39,6 @@ class DatasetTest < Minitest::Test
 
     @connection_mock.verify
     refute_equal dataset, @dataset
-    assert_equal ({total_rows: 1, offset: 0, row: [{ new_key: 'new_value' }]}), dataset.results
+    assert_equal ([{total_rows: 1, offset: 0, row: [{ new_key: 'new_value' }]}]), dataset.results
   end
 end

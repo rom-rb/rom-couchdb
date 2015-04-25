@@ -21,7 +21,7 @@ module ROM
         def symbolize_keys
           result = self.class.new
           keys.each do |key|
-            result[key.to_sym] = delete(key)
+            result[key.to_sym] = self[key]
           end
           result
         end

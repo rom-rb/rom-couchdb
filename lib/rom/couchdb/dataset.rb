@@ -40,8 +40,8 @@ module ROM
       end
 
       def find_by_view(name, params = {})
-        documents = @connection.view(name, params).symbolize_keys
-        self.class.new(@connection, documents)
+        results = @connection.view(name, params).symbolize_keys
+        self.class.new(@connection, [results])
       end
     end
   end
