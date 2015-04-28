@@ -3,16 +3,15 @@ require 'test_helper'
 class DatasetTest < Minitest::Test
   def setup
     @sample_data = [{ test_key: 'test_value' }]
-    @connection_mock = Minitest::Mock.new
+    @connection = CouchRest.database('testdb')
 
-    @dataset = ROM::CouchDB::Dataset.new(@connection_mock, @sample_data)
+    @dataset = ROM::CouchDB::Dataset.new(@sample_data, connection: @connection)
   end
 
   def test_insert
-    @connection_mock.expect :save_doc, {}, [Hash]
+    #@connection_mock.expect :save_doc, {}, [Hash]
     dataset = @dataset.insert(test_key: 'test_value')
 
-    @connection_mock.verify
     assert_equal dataset, @dataset
   end
 
@@ -23,22 +22,19 @@ class DatasetTest < Minitest::Test
   end
 
   def test_find_by_id
-    @connection_mock.expect :get, { new_key: 'new_value' }, [String, Hash]
+    @sample_doc = {key: 'value'}
+    @connection.save_doc(@sample_doc)
 
-    dataset = @dataset.find_by_id('test_id')
+    dataset = @dataset.find_by_id(@sample_doc['_id'])
 
-    @connection_mock.verify
     refute_equal dataset, @dataset
-    assert_equal [{ new_key: 'new_value' }], dataset.results
+    assert_equal @sample_doc['_id'], dataset.to_a.first[:_id]
   end
 
   def test_find_by_view
-    @connection_mock.expect :view, {total_rows: 1, offset: 0, row: [{ new_key: 'new_value' }]}, [String, Hash]
+    dataset = @dataset.find_by_view('_all_docs', {})
 
-    dataset = @dataset.find_by_view('view_name', {})
-
-    @connection_mock.verify
     refute_equal dataset, @dataset
-    assert_equal ([{total_rows: 1, offset: 0, row: [{ new_key: 'new_value' }]}]), dataset.results
+    assert_equal [:total_rows, :offset, :rows], dataset.to_a.first.keys
   end
 end

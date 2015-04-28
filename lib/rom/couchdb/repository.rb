@@ -5,13 +5,14 @@ module ROM
     # CouchDB repository for ROM
     class Repository < ROM::Repository
       attr_reader :connection, :sets
+
       def initialize(uri)
         @connection = CouchRest.database(uri)
         @sets = {}
       end
 
       def dataset(name)
-        @sets[name] = Dataset.new(@connection)
+        @sets[name] = Dataset.new([], connection: @connection)
       end
 
       def [](name)

@@ -1,47 +1,65 @@
 require 'couchrest'
 
+require 'rom/support/options'
+require 'rom/support/data_proxy'
+
 module ROM
   module CouchDB
     # CouchDB Dataset
     class Dataset
+      include ROM::Options
+      include ROM::DataProxy
+
       using HashRefinements
       attr_reader :results
-      def initialize(connection, results = [])
-        @connection, @results = connection, results
+
+      option :connection, reader: true
+
+      def initialize(data, options = {})
+        @data = data
+        super
       end
 
       def insert(object)
-        @connection.save_doc(object.stringify_keys!)
-        object.symbolize_keys!
+        input = stringify_proc.call(object.dup)
+        resp = @connection.save_doc(input)
+        # send back the id and revision of the document
+        object[:_id] = resp['id']
+        object[:_rev] = resp['rev']
         self
       end
       alias_method :<<, :insert
 
       def delete(object)
-        @connection.delete_doc(object)
+        input = stringify_proc.call(object.dup)
+        @connection.delete_doc(input)
         self
       end
 
-      def each(&block)
-        @results.each(&block)
-      end
-
       def count
-        @results.count
+        @data.count
       end
 
       def to_a
-        @results
+        @data
       end
 
       def find_by_id(id, params = {})
         document = @connection.get(id, params).to_hash
-        self.class.new(@connection, [document.symbolize_keys!])
+        self.class.new([document.symbolize_keys], connection: @connection)
       end
 
       def find_by_view(name, params = {})
         results = @connection.view(name, params).symbolize_keys
-        self.class.new(@connection, [results])
+        self.class.new([results], connection: @connection)
+      end
+
+      def stringify_proc
+        Transproc(:stringify_keys)
+      end
+
+      def self.row_proc
+        Transproc(:symbolize_keys)
       end
     end
   end
