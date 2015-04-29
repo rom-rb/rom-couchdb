@@ -9,7 +9,6 @@ class DatasetTest < Minitest::Test
   end
 
   def test_insert
-    #@connection_mock.expect :save_doc, {}, [Hash]
     dataset = @dataset.insert(test_key: 'test_value')
 
     assert_equal dataset, @dataset
@@ -28,13 +27,13 @@ class DatasetTest < Minitest::Test
     dataset = @dataset.find_by_id(@sample_doc['_id'])
 
     refute_equal dataset, @dataset
-    assert_equal @sample_doc['_id'], dataset.to_a.first[:_id]
+    assert_equal @sample_doc['_id'], dataset.to_a.first['_id']
   end
 
   def test_find_by_view
     dataset = @dataset.find_by_view('_all_docs', {})
 
     refute_equal dataset, @dataset
-    assert_equal [:total_rows, :offset, :rows], dataset.to_a.first.keys
+    assert_equal ['total_rows', 'offset', 'rows'], dataset.to_a.first.keys
   end
 end
