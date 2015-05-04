@@ -1,10 +1,15 @@
 # Rom::CouchDB
 
-[![Build Status](https://travis-ci.org/hmadison/rom-couchdb.svg)](https://travis-ci.org/hmadison/rom-couchdb)
+[![Build Status](https://travis-ci.org/hmadison/rom-couchdb.svg)](https://travis-ci.org/hmadison/rom-couchdb) [![Gem Version](https://badge.fury.io/rb/rom-couchdb.svg)](http://badge.fury.io/rb/rom-couchdb)
 
-Work in progress for CouchDB support for ROM. Uses [couchrest](https://github.com/couchrest/couchrest) as the connection adapter.
+Experimental CouchDB support for ROM. Uses [couchrest](https://github.com/couchrest/couchrest) as the connection adapter.
+
+## Installing
+
+Add `gem 'rom-couchdb'` to your Gemfile.
 
 ## Example
+
 
 ```ruby
 class Color
