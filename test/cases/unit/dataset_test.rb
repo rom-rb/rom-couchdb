@@ -21,7 +21,7 @@ class DatasetTest < Minitest::Test
   end
 
   def test_find_by_id
-    @sample_doc = {key: 'value'}
+    @sample_doc = { key: 'value' }
     @connection.save_doc(@sample_doc)
 
     dataset = @dataset.find_by_id(@sample_doc['_id'])
@@ -34,6 +34,6 @@ class DatasetTest < Minitest::Test
     dataset = @dataset.find_by_view('_all_docs', {})
 
     refute_equal dataset, @dataset
-    assert_equal ['total_rows', 'offset', 'rows'], dataset.to_a.first.keys
+    assert_equal %w(total_rows offset rows), dataset.to_a.first.keys
   end
 end
