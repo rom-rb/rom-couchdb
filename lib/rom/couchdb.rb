@@ -1,7 +1,7 @@
 require 'rom'
 
 require 'rom/couchdb/version'
-require 'rom/couchdb/repository'
+require 'rom/couchdb/gateway'
 require 'rom/couchdb/dataset'
 require 'rom/couchdb/relation'
 require 'rom/couchdb/commands'
