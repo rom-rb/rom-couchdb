@@ -2,8 +2,8 @@ require 'couchrest'
 
 module ROM
   module CouchDB
-    # CouchDB repository for ROM
-    class Repository < ROM::Repository
+    # CouchDB gateway for ROM
+    class Gateway < ROM::Gateway
       attr_reader :connection, :sets
 
       def initialize(uri)

@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class RepositoryTest < Minitest::Test
+class GatewayTest < Minitest::Test
   def setup
-    @registry = ROM::CouchDB::Repository.new('testdb')
+    @registry = ROM::CouchDB::Gateway.new('testdb')
   end
 
   def test_connection

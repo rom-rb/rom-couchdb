@@ -1,16 +1,16 @@
 require 'test_helper'
 require 'rom/lint/test'
 
-class RepositoryLintTest < Minitest::Test
-  include ROM::Lint::TestRepository
+class GatewayLintTest < Minitest::Test
+  include ROM::Lint::TestGateway
 
   def setup
-    @repository = ROM::CouchDB::Repository
+    @gateway = ROM::CouchDB::Gateway
     @identifier = :couchdb
     @uri = 'testdb'
   end
 
-  def repository_instance
-    ROM::CouchDB::Repository.new
+  def gateway_instance
+    ROM::CouchDB::Gateway.new
   end
 end
