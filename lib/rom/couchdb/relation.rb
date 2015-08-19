@@ -4,6 +4,7 @@ module ROM
   module CouchDB
     # CouchDB relation support
     class Relation < ROM::Relation
+      adapter :couchdb
       forward :insert, :find_by_id, :find_by_view
 
       def count

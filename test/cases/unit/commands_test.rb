@@ -3,8 +3,7 @@ require 'test_helper'
 class CommandsTest < Minitest::Test
   def setup
     @database_name = 'testdb'
-    @setup = ROM.setup(:couchdb, @database_name)
-
+    @setup = clean_environment(@database_name)
     @setup.relation(:users)
 
     @setup.commands(:users) do
@@ -70,5 +69,11 @@ class CommandsTest < Minitest::Test
     # Make sure we have a id and rev from couchdb
     refute_nil document['_id']
     refute_nil document['_rev']
+  end
+
+  def clean_environment(database_name)
+    rom_env = ROM::Environment.new
+    rom_env.use :auto_registration
+    rom_env.setup(:couchdb, database_name)
   end
 end

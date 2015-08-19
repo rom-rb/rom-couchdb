@@ -54,11 +54,11 @@ module ROM
       end
 
       def stringify_proc
-        Transproc(:stringify_keys)
+        TransprocFunctions[:stringify_keys]
       end
 
       def self.row_proc
-        Transproc(:symbolize_keys)
+        TransprocFunctions[:symbolize_keys]
       end
     end
   end
