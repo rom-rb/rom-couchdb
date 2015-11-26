@@ -1,18 +1,9 @@
 require 'test_helper'
-
+require 'byebug'
 class CommandsTest < Minitest::Test
   def setup
     @database_name = 'testdb'
-    @setup = clean_environment(@database_name)
-    @setup.relation(:users)
-
-    @setup.commands(:users) do
-      define(:create)
-      define(:update)
-      define(:delete)
-    end
-
-    @rom = @setup.finalize
+    @rom = build_container
     @user_commands = @rom.command(:users)
   end
 
@@ -71,9 +62,16 @@ class CommandsTest < Minitest::Test
     refute_nil document['_rev']
   end
 
-  def clean_environment(database_name)
-    rom_env = ROM::Environment.new
-    rom_env.use :auto_registration
-    rom_env.setup(:couchdb, database_name)
+  def build_container
+    ROM.container(:couchdb, @database_name) do |config|
+      config.use(:macros)
+      config.relation(:users)
+
+      config.commands(:users) do
+        define(:create)
+        define(:update)
+        define(:delete)
+      end
+    end
   end
 end
