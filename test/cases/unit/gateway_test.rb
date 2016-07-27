@@ -7,7 +7,7 @@ class GatewayTest < Minitest::Test
 
   def test_connection
     assert_equal CouchRest::Database, @registry.connection.class
-    assert_equal 'http://127.0.0.1:5984/testdb', @registry.connection.root
+    assert_equal 'http://127.0.0.1:5984/testdb', @registry.connection.root.to_s
   end
 
   def test_dataset
