@@ -27,7 +27,7 @@ module ROM
         object[:_rev] = resp['rev']
         self
       end
-      alias_method :<<, :insert
+      alias << insert
 
       def delete(object)
         input = stringify_proc.call(object.dup)
