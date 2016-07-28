@@ -24,7 +24,7 @@ module ROM
 
         def execute(object)
           document = object.dup
-          collection << (document)
+          collection << document
           [document]
         end
       end

@@ -49,9 +49,7 @@ class CommandsTest < Minitest::Test
     @user_commands.delete.call(document)
 
     # Ensure the document was deleted
-    assert_raises RestClient::ResourceNotFound do
-      connection.get(document['_id'])
-    end
+    refute connection.get(document['_id'])
   end
 
   private
@@ -64,7 +62,6 @@ class CommandsTest < Minitest::Test
 
   def build_container
     ROM.container(:couchdb, @database_name) do |config|
-      config.use(:macros)
       config.relation(:users)
 
       config.commands(:users) do
