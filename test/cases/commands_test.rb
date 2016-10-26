@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'byebug'
+
 class CommandsTest < Minitest::Test
   def setup
     @database_name = 'testdb'
