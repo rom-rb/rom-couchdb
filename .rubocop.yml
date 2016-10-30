@@ -5,6 +5,5 @@ AllCops:
 
 Style/Documentation:
   Exclude:
-    - 'test/cases/unit/*'
-    - 'test/cases/integration/*'
+    - 'test/cases/*'
     - 'test/support/*'
