@@ -1,17 +1,18 @@
 require 'couchrest'
 
-require 'rom/support/options'
-require 'rom/support/data_proxy'
+require 'rom/initializer'
+require 'rom/data_proxy'
 
 module ROM
   module CouchDB
     # CouchDB Dataset
     class Dataset
-      include ROM::Options
-      include ROM::DataProxy
+      extend Initializer
+      include DataProxy
 
       attr_reader :results
 
+      param :data
       option :connection, reader: true
 
       def initialize(data, options = {})
